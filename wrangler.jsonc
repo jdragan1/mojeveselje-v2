@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mojeveselje",
+  "name": "mojeveselje-v2",
   "compatibility_date": "2026-07-14",
   "main": "worker.js",
   // Sistem naloga (Deo 6 u UPUTSTVU) zahteva sledece "wrangler secret put" vrednosti,
