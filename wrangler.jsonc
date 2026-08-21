@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mojeveselje",
+  "compatibility_date": "2026-07-14",
+  "main": "worker.js",
+  // Sistem naloga (Deo 6 u UPUTSTVU) zahteva sledece "wrangler secret put" vrednosti,
+  // NE upisuju se ovde (secrets se ne cuvaju u ovom fajlu iz bezbednosnih razloga):
+  //   ADMIN_EMAIL            - email koji automatski dobija admin ulogu
+  //   GOOGLE_CLIENT_ID        - opciono, za prijavu preko Google-a
+  //   GOOGLE_CLIENT_SECRET    - opciono, za prijavu preko Google-a
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // VAZNO: MORA biti "/*" (sve putanje), ne samo "/api/*". Sa "/api/*" jedino,
+    // Cloudflare je za putanje kao /abc12345/ (link ka pojedinacnoj pozivnici)
+    // preskakao nas Worker kod potpuno i odmah servirao generican index.html
+    // direktno iz statickih fajlova — sto znaci da kod koji ubacuje ispravnu
+    // sliku/naslov/opis pozivnice (za lep prikaz na Viber/WhatsApp/FB/Instagram)
+    // NIKAD nije ni pozvan za te adrese. Obican browser to prikriva jer njegov
+    // JavaScript posle ionako sam ucita prave podatke — ali botovi drustvenih
+    // mreza ne pokrecu JavaScript, pa su uvek videli samo generican pregled sajta.
+    "run_worker_first": ["/*"]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "kv_namespaces": [
+    {
+      "binding": "INVITES",
+      "id": "PASTE_YOUR_KV_NAMESPACE_ID_HERE"
+    }
+  ]
+}
