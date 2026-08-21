@@ -1,0 +1,67 @@
+{
+  "themes": [
+    {
+      "id": "wedding-elegant",
+      "file": "wedding-elegant.html",
+      "name": "Elegant Wedding",
+      "label": "Elegantno venčanje",
+      "type": "vencanje",
+      "colors": ["#12211C", "#C9A24B"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    },
+    {
+      "id": "birthday-kids",
+      "file": "birthday-kids.html",
+      "name": "Birthday Kids",
+      "label": "Dečiji rođendan",
+      "type": "ostalo",
+      "colors": ["#FFF7F0", "#FF6F91"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    },
+    {
+      "id": "wedding-romansa",
+      "file": "wedding-romansa.html",
+      "name": "Romantična svadba",
+      "label": "Topla, sa fotografijom u pozadini",
+      "type": "vencanje",
+      "colors": ["#FDF8F2", "#E47A2E"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    },
+    {
+      "id": "wedding-bootstrap",
+      "file": "wedding-bootstrap.html",
+      "name": "Bootstrap svadba",
+      "label": "Klasičan, Bootstrap izgled",
+      "type": "vencanje",
+      "colors": ["#FDF8F2", "#E47A2E"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    },
+    {
+      "id": "baptism",
+      "file": "baptism.html",
+      "name": "Nebeska nežnost",
+      "label": "Pastelno plavo, nežno",
+      "type": "krstenje",
+      "colors": ["#F3F8FB", "#7FA8C9"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    },
+    {
+      "id": "farewell",
+      "file": "farewell.html",
+      "name": "Tihi spomen",
+      "label": "Dostojanstveno, smireno",
+      "type": "ispracaj",
+      "colors": ["#F2F1ED", "#8A8577"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    },
+    {
+      "id": "anniversary",
+      "file": "anniversary.html",
+      "name": "Zajedno kroz godine",
+      "label": "Toplo, romantično, elegantno",
+      "type": "ostalo",
+      "colors": ["#FBF1EA", "#B5654F"],
+      "features": { "gallery": true, "music": false, "rsvp": true, "map": true }
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,440;1,9..144,440&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF1EA; --card:#FFFFFF; --line:#EAD9C9;
+    --rose:#B5654F; --gold:#C9A24B; --ink:#3A2A22; --ink-dim:#8A7364;
+    --serif:'Fraunces',serif; --sans:'Jost',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.75;font-size:16px;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+
+  .hero{min-height:100svh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+  .bignum{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);
+    font-family:var(--serif);font-style:italic;font-size:min(50vw,460px);font-weight:440;line-height:1;
+    color:transparent;-webkit-text-stroke:1px rgba(181,101,79,.14);pointer-events:none;user-select:none;
+  }
+  .cover-frame{
+    position:relative;z-index:1;width:min(60vw,180px);aspect-ratio:1;border-radius:50%;margin:0 auto 24px;
+    overflow:hidden;border:3px solid #fff;box-shadow:0 0 0 1px var(--gold),0 20px 40px -18px rgba(181,101,79,.4);
+    display:{{cover_display}};
+  }
+  .cover-frame img{width:100%;height:100%;object-fit:cover;}
+  .kicker{position:relative;z-index:1;font-size:12px;letter-spacing:.36em;text-transform:uppercase;color:var(--rose);}
+  .names{position:relative;z-index:1;font-family:var(--serif);font-style:italic;font-weight:440;font-size:clamp(44px,9vw,86px);margin:14px 0 8px;}
+  .hero-rule{position:relative;z-index:1;width:1px;height:40px;background:linear-gradient(var(--gold),transparent);margin:24px auto;}
+  .hero-date{position:relative;z-index:1;font-size:14.5px;color:var(--ink-dim);}
+  .hero-date b{color:var(--ink);font-weight:500;}
+
+  section{padding:100px 0;}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);text-align:center;margin-bottom:16px;}
+  h2{font-family:var(--serif);font-style:italic;font-weight:440;font-size:clamp(30px,4.5vw,42px);text-align:center;margin-bottom:18px;}
+  .lead{max-width:560px;margin:0 auto;text-align:center;color:var(--ink-dim);font-size:15.5px;white-space:pre-line;}
+
+  .persons{background:var(--card);}
+  .persons-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:32px;}
+  .person{width:190px;text-align:center;}
+  .person .ph{width:104px;height:104px;border-radius:50%;margin:0 auto 14px;overflow:hidden;background:linear-gradient(160deg,#EAD9C9,#F0DFCB);}
+  .person .ph img{width:100%;height:100%;object-fit:cover;}
+  .person .role{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;}
+  .person .name{font-family:var(--serif);font-style:italic;font-size:23px;}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+  .card{background:var(--card);padding:42px 30px;text-align:center;}
+  .card h3{font-family:var(--serif);font-style:italic;font-weight:440;font-size:26px;color:var(--rose);margin-bottom:8px;}
+  .card p{color:var(--ink-dim);font-size:14px;margin-bottom:3px;}
+  .card .time{color:var(--ink);font-weight:500;margin-top:14px;font-size:14px;}
+  .card a.map-link{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--rose);text-decoration:underline;}
+
+  .count-wrap{background:var(--card);text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .count{display:flex;justify-content:center;gap:0;flex-wrap:wrap;}
+  .count .box{min-width:96px;padding:0 22px;border-right:1px solid var(--line);}
+  .count .box:last-child{border-right:none;}
+  .count .box b{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(28px,5vw,40px);color:var(--rose);font-weight:440;}
+  .count .box span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);}
+
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+  .gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;}
+
+  .rsvp-wrap{text-align:center;}
+  .rsvp-btn{
+    display:inline-block;margin-top:32px;padding:16px 46px;background:var(--rose);
+    color:#fff;font-family:var(--sans);font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+    font-size:13px;text-decoration:none;transition:background .3s;
+  }
+  .rsvp-btn:hover{background:#9A5240;}
+
+  footer{text-align:center;padding:56px 24px;color:var(--ink-dim);font-size:13px;}
+  footer .fmono{font-family:var(--serif);font-style:italic;color:var(--rose);font-size:22px;display:block;margin-bottom:8px;}
+
+  @media (max-width:760px){ .bignum{font-size:76vw;} section{padding:74px 0;} .cards{grid-template-columns:1fr;} .count .box{min-width:76px;padding:0 12px;} }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="bignum">❤</div>
+  <p class="kicker">Slavimo zajedno</p>
+  <div class="cover-frame"><img src="{{cover_image}}" alt=""></div>
+  <h1 class="names">{{title}}</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-date">{{date_label}} <b>{{date}}</b>{{time_suffix}}</p>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Poruka</p>
+    <h2>Poziv za vas</h2>
+    <p class="lead">{{message}}</p>
+  </div>
+</section>
+
+<section class="persons" style="display:{{persons_section_display}};">
+  <div class="wrap">
+    <p class="eyebrow">Slavimo</p>
+    <h2>Proslavljamo zajedno</h2>
+    <div class="persons-grid">{{persons_html}}</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Kada i gde</p>
+    <h2>Raspored proslave</h2>
+    <div class="cards">{{locations_html}}</div>
+  </div>
+</section>
+
+<section class="count-wrap" style="display:{{countdown_display}};">
+  <div class="wrap">
+    <p class="eyebrow">Preostalo vreme</p>
+    <h2>Brojimo dane do proslave</h2>
+    <div class="count">
+      <div class="box"><b id="cd-d">00</b><span>Dana</span></div>
+      <div class="box"><b id="cd-h">00</b><span>Sati</span></div>
+      <div class="box"><b id="cd-m">00</b><span>Minuta</span></div>
+      <div class="box"><b id="cd-s">00</b><span>Sekundi</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:{{gallery_section_display}};">
+  <div class="wrap">
+    <p class="eyebrow">Uspomene</p>
+    <h2>Galerija</h2>
+    <div class="gallery">{{gallery_html}}</div>
+  </div>
+</section>
+
+<section class="rsvp-wrap">
+  <div class="wrap">
+    <p class="eyebrow">Potvrda dolaska</p>
+    <h2>Hoćete li nam se pridružiti?</h2>
+    <p class="lead">Molimo vas da potvrdite dolazak — vaš odgovor nam pomaže da sve isplaniramo do detalja.</p>
+    <a class="rsvp-btn" href="{{rsvp_url}}">Potvrdi dolazak</a>
+  </div>
+</section>
+
+<footer>
+  <span class="fmono">{{title}}</span>
+  Sa radošću vas očekujemo — {{date}}
+</footer>
+
+<script>
+  var t = "{{countdown_target}}";
+  if(t){
+    var target = new Date(t);
+    function tick(){
+      var diff = Math.max(0, target - new Date());
+      var d = Math.floor(diff/864e5), h = Math.floor(diff/36e5)%24,
+          m = Math.floor(diff/6e4)%60, s = Math.floor(diff/1e3)%60;
+      var pad = function(n){ return String(n).padStart(2,'0'); };
+      var elD=document.getElementById('cd-d');
+      if(elD){ elD.textContent=pad(d); document.getElementById('cd-h').textContent=pad(h);
+        document.getElementById('cd-m').textContent=pad(m); document.getElementById('cd-s').textContent=pad(s); }
+    }
+    tick(); setInterval(tick, 1000);
+  }
+</script>
+</body>
+</html>

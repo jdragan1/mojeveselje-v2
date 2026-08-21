@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FDF8F2; --card:#FFFFFF; --line:#EFE0CC;
+    --accent:#E47A2E; --accent-dark:#C4631E; --ink:#2E2620; --ink-dim:#8A7A68;
+    --script:'Great Vibes',cursive; --sans:'Montserrat',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.75;font-size:16px;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;position:relative;display:flex;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;background:linear-gradient(160deg,#EFE0CC,var(--bg));
+  }
+  .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;display:{{cover_display}};}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(46,38,32,.35),rgba(46,38,32,.65));}
+  .hero-content{position:relative;z-index:1;padding:40px 24px;color:{{hero_text_color}};}
+  .kicker{font-size:12px;letter-spacing:.4em;text-transform:uppercase;opacity:.85;}
+  .names{font-family:var(--script);font-weight:400;font-size:clamp(56px,12vw,120px);line-height:1.1;margin:14px 0 6px;}
+  .hero-date{font-size:15px;letter-spacing:.08em;opacity:.9;}
+  .hero-date b{font-weight:600;}
+
+  /* ---------- SECTION shared ---------- */
+  section{padding:100px 0;}
+  .section-title{text-align:center;margin-bottom:56px;}
+  .section-title .eyebrow{font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .section-title h2{font-family:var(--script);font-weight:400;font-size:clamp(38px,6vw,56px);color:var(--ink);}
+  .lead{max-width:580px;margin:0 auto;text-align:center;color:var(--ink-dim);font-size:16px;white-space:pre-line;}
+
+  /* ---------- O NAMA / OSOBE ---------- */
+  .persons{background:var(--card);}
+  .persons-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:36px;}
+  .person{width:220px;text-align:center;background:var(--bg);border:1px solid var(--line);padding:34px 22px;}
+  .person .ph{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(160deg,#EFE0CC,#E4C9A0);}
+  .person .ph img{width:100%;height:100%;object-fit:cover;}
+  .person .role{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .person .name{font-family:var(--script);font-size:26px;color:var(--ink);}
+
+  /* ---------- DOGAĐAJ ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+  .card{background:var(--card);padding:44px 32px;text-align:center;}
+  .card h3{font-family:var(--script);font-size:30px;color:var(--accent);margin-bottom:10px;font-weight:400;}
+  .card p{color:var(--ink-dim);font-size:14px;margin-bottom:3px;}
+  .card .time{color:var(--ink);font-weight:600;margin-top:14px;font-size:14.5px;}
+  .card a.map-link{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--accent);text-decoration:underline;}
+
+  /* ---------- ODBROJAVANJE ---------- */
+  .count-wrap{background:var(--card);text-align:center;}
+  .count{display:flex;justify-content:center;gap:0;flex-wrap:wrap;}
+  .count .box{min-width:100px;padding:0 24px;border-right:1px solid var(--line);}
+  .count .box:last-child{border-right:none;}
+  .count .box b{display:block;font-family:var(--script);font-size:clamp(34px,6vw,52px);color:var(--accent);font-weight:400;}
+  .count .box span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);}
+
+  /* ---------- GALERIJA ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;}
+  .gallery img{width:100%;aspect-ratio:1;object-fit:cover;}
+
+  /* ---------- RSVP ---------- */
+  .rsvp-wrap{background:linear-gradient(160deg,#2E2620,#1C1712);text-align:center;color:#F3ECE2;}
+  .rsvp-wrap .eyebrow{color:var(--accent);}
+  .rsvp-wrap .section-title h2{color:#F3ECE2;}
+  .rsvp-wrap .lead{color:rgba(243,236,226,.7);}
+  .rsvp-btn{
+    display:inline-block;margin-top:34px;padding:17px 50px;background:var(--accent);
+    color:#fff;font-family:var(--sans);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    font-size:13px;text-decoration:none;transition:background .3s;
+  }
+  .rsvp-btn:hover{background:var(--accent-dark);}
+
+  footer{text-align:center;padding:56px 24px;background:#1C1712;color:rgba(243,236,226,.6);font-size:13px;}
+  footer .fmono{font-family:var(--script);font-size:26px;color:var(--accent);display:block;margin-bottom:10px;}
+
+  @media (max-width:760px){
+    section{padding:70px 0;}
+    .cards{grid-template-columns:1fr;}
+    .count .box{min-width:78px;padding:0 12px;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('{{cover_image}}');"></div>
+  <div class="hero-content">
+    <p class="kicker">Pozivamo vas na venčanje</p>
+    <h1 class="names">{{title}}</h1>
+    <p class="hero-date">{{date_label}} <b>{{date}}</b>{{time_suffix}}</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-title"><p class="eyebrow">Poruka</p><h2>Poziv za vas</h2></div>
+    <p class="lead">{{message}}</p>
+  </div>
+</section>
+
+<section class="persons" style="display:{{persons_section_display}};">
+  <div class="wrap">
+    <div class="section-title"><p class="eyebrow">Ko slavi</p><h2>Mladenci</h2></div>
+    <div class="persons-grid">{{persons_html}}</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-title"><p class="eyebrow">Kada i gde</p><h2>Raspored dana</h2></div>
+    <div class="cards">{{locations_html}}</div>
+  </div>
+</section>
+
+<section class="count-wrap" style="display:{{countdown_display}};">
+  <div class="wrap">
+    <div class="section-title"><p class="eyebrow">Preostalo vreme</p><h2>Brojimo dane</h2></div>
+    <div class="count">
+      <div class="box"><b id="cd-d">00</b><span>Dana</span></div>
+      <div class="box"><b id="cd-h">00</b><span>Sati</span></div>
+      <div class="box"><b id="cd-m">00</b><span>Minuta</span></div>
+      <div class="box"><b id="cd-s">00</b><span>Sekundi</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:{{gallery_section_display}};">
+  <div class="wrap">
+    <div class="section-title"><p class="eyebrow">Trenuci</p><h2>Galerija</h2></div>
+    <div class="gallery">{{gallery_html}}</div>
+  </div>
+</section>
+
+<section class="rsvp-wrap">
+  <div class="wrap">
+    <div class="section-title"><p class="eyebrow">Potvrda dolaska</p><h2>Hoćete li nam se pridružiti?</h2></div>
+    <p class="lead">Molimo vas da potvrdite dolazak — vaš odgovor nam pomaže da sve isplaniramo do detalja.</p>
+    <a class="rsvp-btn" href="{{rsvp_url}}">Potvrdi dolazak</a>
+  </div>
+</section>
+
+<footer>
+  <span class="fmono">{{title}}</span>
+  Sa ljubavlju vas očekujemo — {{date}}
+</footer>
+
+<script>
+  var t = "{{countdown_target}}";
+  if(t){
+    var target = new Date(t);
+    function tick(){
+      var diff = Math.max(0, target - new Date());
+      var d = Math.floor(diff/864e5), h = Math.floor(diff/36e5)%24,
+          m = Math.floor(diff/6e4)%60, s = Math.floor(diff/1e3)%60;
+      var pad = function(n){ return String(n).padStart(2,'0'); };
+      var elD=document.getElementById('cd-d');
+      if(elD){ elD.textContent=pad(d); document.getElementById('cd-h').textContent=pad(h);
+        document.getElementById('cd-m').textContent=pad(m); document.getElementById('cd-s').textContent=pad(s); }
+    }
+    tick(); setInterval(tick, 1000);
+  }
+</script>
+</body>
+</html>

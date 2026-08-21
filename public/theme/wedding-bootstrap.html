@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<!-- Pravi Bootstrap 5 (CSS layer samo) sa CDN-a, po zahtevu. NAMERNO se ne
+     ucitava Bootstrap JS bundle ni jQuery — na ovoj stranici nema navbar
+     kolaps/karusel/modal komponenti kojima bi to bilo potrebno, pa se
+     jednostavno preskace ono sto nije neophodno (manje zavisnosti = manje
+     mesta gde nesto moze da zakaze). -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bs-primary:#E47A2E; --accent-dark:#C4631E; }
+  body{font-family:'Montserrat',sans-serif;font-weight:300;color:#2E2620;}
+  .font-secondary{font-family:'Great Vibes',cursive;}
+  .text-primary{color:#E47A2E !important;}
+  .btn-primary{background-color:#E47A2E;border-color:#E47A2E;}
+  .btn-primary:hover{background-color:#C4631E;border-color:#C4631E;}
+  .btn-outline-primary{color:#E47A2E;border-color:#E47A2E;}
+  .btn-outline-primary:hover{background-color:#E47A2E;border-color:#E47A2E;}
+
+  .hero{min-height:100svh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:linear-gradient(160deg,#EFE0CC,#FDF8F2);}
+  .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;display:{{cover_display}};}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,24,20,.35),rgba(30,24,20,.68));}
+  .hero-content{position:relative;z-index:1;color:{{hero_text_color}};padding:0 20px;}
+  .hero .kicker{letter-spacing:.35em;font-size:12px;text-transform:uppercase;opacity:.85;}
+  .hero h1{font-size:clamp(52px,11vw,110px);margin:14px 0 10px;}
+
+  section{padding:100px 0;}
+  .section-title{margin-bottom:56px;}
+  .section-title i{color:#E47A2E;}
+
+  .person{background:#fff;border:1px solid #EFE0CC;border-radius:6px;padding:34px 24px;text-align:center;height:100%;}
+  .person .ph{width:110px;height:110px;border-radius:50%;margin:0 auto 16px;overflow:hidden;background:linear-gradient(160deg,#EFE0CC,#E4C9A0);}
+  .person .ph img{width:100%;height:100%;object-fit:cover;}
+  .person .role{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E47A2E;margin-bottom:6px;}
+  .person .name{font-family:'Great Vibes',cursive;font-size:26px;}
+  #persons-grid{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;}
+  #persons-grid > div{flex:1 1 220px;max-width:240px;}
+
+  .card{background:#fff;border:1px solid #EFE0CC;border-radius:6px;padding:44px 30px;text-align:center;height:100%;}
+  .card h3{font-family:'Great Vibes',cursive;font-size:30px;color:#E47A2E;margin-bottom:8px;font-weight:400;}
+  .card p{color:#8A7A68;font-size:14px;margin-bottom:3px;}
+  .card .time{color:#2E2620;font-weight:600;margin-top:12px;font-size:14px;}
+  .card a.map-link{display:inline-block;margin-top:10px;font-size:12.5px;color:#E47A2E;}
+  #locations-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+  #locations-grid > div{flex:1 1 260px;max-width:320px;}
+
+  .bg-dark-section{background:#1C1712;color:#F3ECE2;}
+  .count b{font-family:'Great Vibes',cursive;font-size:clamp(34px,6vw,52px);color:#E47A2E;display:block;}
+  .count span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.65;}
+
+  #gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;}
+  #gallery-grid img{border-radius:4px;aspect-ratio:1;object-fit:cover;width:100%;}
+
+  footer .fmono{font-family:'Great Vibes',cursive;font-size:26px;color:#E47A2E;}
+
+  @media (max-width:420px){
+    .hero h1{font-size:44px;}
+    section{padding:64px 0;}
+    .person, .card{padding:26px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('{{cover_image}}');"></div>
+  <div class="hero-content">
+    <p class="kicker">Pozivamo vas na venčanje</p>
+    <h1 class="font-secondary">{{title}}</h1>
+    <p>{{date_label}} <b>{{date}}</b>{{time_suffix}}</p>
+  </div>
+</section>
+
+<section>
+  <div class="container text-center">
+    <div class="section-title">
+      <h6 class="text-uppercase text-primary mb-3" style="letter-spacing:3px;">Poruka</h6>
+      <h1 class="font-secondary display-4">Poziv za vas</h1>
+      <i class="far fa-heart"></i>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8"><p class="lead" style="white-space:pre-line;">{{message}}</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-light" style="display:{{persons_section_display}};">
+  <div class="container text-center">
+    <div class="section-title">
+      <h6 class="text-uppercase text-primary mb-3" style="letter-spacing:3px;">Ko slavi</h6>
+      <h1 class="font-secondary display-4">Mladenci</h1>
+      <i class="far fa-heart"></i>
+    </div>
+    <div id="persons-grid">{{persons_html}}</div>
+  </div>
+</section>
+
+<section>
+  <div class="container text-center">
+    <div class="section-title">
+      <h6 class="text-uppercase text-primary mb-3" style="letter-spacing:3px;">Kada i gde</h6>
+      <h1 class="font-secondary display-4">Raspored dana</h1>
+      <i class="far fa-heart"></i>
+    </div>
+    <div id="locations-grid">{{locations_html}}</div>
+  </div>
+</section>
+
+<section class="bg-dark-section text-center" style="display:{{countdown_display}};">
+  <div class="container">
+    <div class="section-title">
+      <h6 class="text-uppercase text-primary mb-3" style="letter-spacing:3px;">Preostalo vreme</h6>
+      <h1 class="font-secondary display-4">Brojimo dane</h1>
+    </div>
+    <div class="row justify-content-center count">
+      <div class="col-3 col-md-2"><b id="cd-d">00</b><span>Dana</span></div>
+      <div class="col-3 col-md-2"><b id="cd-h">00</b><span>Sati</span></div>
+      <div class="col-3 col-md-2"><b id="cd-m">00</b><span>Minuta</span></div>
+      <div class="col-3 col-md-2"><b id="cd-s">00</b><span>Sekundi</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:{{gallery_section_display}};">
+  <div class="container text-center">
+    <div class="section-title">
+      <h6 class="text-uppercase text-primary mb-3" style="letter-spacing:3px;">Trenuci</h6>
+      <h1 class="font-secondary display-4">Galerija</h1>
+      <i class="far fa-heart"></i>
+    </div>
+    <div id="gallery-grid">{{gallery_html}}</div>
+  </div>
+</section>
+
+<section class="bg-dark-section text-center">
+  <div class="container">
+    <div class="section-title">
+      <h6 class="text-uppercase text-primary mb-3" style="letter-spacing:3px;">Potvrda dolaska</h6>
+      <h1 class="font-secondary display-4">Hoćete li nam se pridružiti?</h1>
+      <i class="far fa-heart"></i>
+    </div>
+    <p class="mb-4" style="opacity:.75;">Molimo vas da potvrdite dolazak — vaš odgovor nam pomaže da sve isplaniramo do detalja.</p>
+    <a href="{{rsvp_url}}" class="btn btn-primary btn-lg px-5 py-3 text-uppercase" style="letter-spacing:.08em;">Potvrdi dolazak</a>
+  </div>
+</section>
+
+<footer class="bg-dark-section text-center py-5">
+  <span class="fmono d-block mb-2">{{title}}</span>
+  <span style="opacity:.6;font-size:14px;">Sa ljubavlju vas očekujemo — {{date}}</span>
+</footer>
+
+<script>
+  var t = "{{countdown_target}}";
+  if(t){
+    var target = new Date(t);
+    function tick(){
+      var diff = Math.max(0, target - new Date());
+      var d = Math.floor(diff/864e5), h = Math.floor(diff/36e5)%24,
+          m = Math.floor(diff/6e4)%60, s = Math.floor(diff/1e3)%60;
+      var pad = function(n){ return String(n).padStart(2,'0'); };
+      var elD=document.getElementById('cd-d');
+      if(elD){ elD.textContent=pad(d); document.getElementById('cd-h').textContent=pad(h);
+        document.getElementById('cd-m').textContent=pad(m); document.getElementById('cd-s').textContent=pad(s); }
+    }
+    tick(); setInterval(tick, 1000);
+  }
+</script>
+</body>
+</html>

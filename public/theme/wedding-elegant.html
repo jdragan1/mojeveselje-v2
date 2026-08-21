@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12211C; --bg-deep:#0B1712; --card:#1C332B;
+    --gold:#C9A24B; --gold-light:#E4C878; --sage:#8FA98F;
+    --ink:#F1EEE3; --ink-dim:rgba(241,238,227,.68);
+    --serif:'Cormorant Garamond',serif; --sans:'Jost',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;font-size:16px;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+  .hero{
+    min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;position:relative;padding:80px 24px 60px;
+    background:radial-gradient(ellipse at 50% 12%, #1E3A2F, var(--bg-deep) 72%);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background-image:
+      radial-gradient(circle at 12% 22%, rgba(201,162,75,.55) 0 1.6px, transparent 2px),
+      radial-gradient(circle at 85% 15%, rgba(201,162,75,.4) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 70% 78%, rgba(201,162,75,.5) 0 1.6px, transparent 2px),
+      radial-gradient(circle at 22% 82%, rgba(201,162,75,.35) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 92% 58%, rgba(201,162,75,.4) 0 1.2px, transparent 2px);
+    animation:dust 6s ease-in-out infinite;
+  }
+  @keyframes dust{0%,100%{opacity:.28;}50%{opacity:.65;}}
+  .kicker{font-size:12px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);position:relative;z-index:1;}
+  .cover-frame{
+    position:relative;z-index:1;width:min(72vw,220px);aspect-ratio:1;border-radius:50%;margin:30px auto;
+    overflow:hidden;border:1px solid rgba(201,162,75,.4);box-shadow:0 20px 44px -20px rgba(0,0,0,.6);
+    display:{{cover_display}};
+  }
+  .cover-frame img{width:100%;height:100%;object-fit:cover;}
+  .names{
+    font-family:var(--serif);font-weight:500;font-style:italic;
+    font-size:clamp(42px,9vw,84px);line-height:1.08;position:relative;z-index:1;
+    background:linear-gradient(100deg,var(--gold) 15%,var(--gold-light) 45%,var(--gold) 75%);
+    background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 5s linear infinite;
+  }
+  @keyframes shine{0%{background-position:0 0;}100%{background-position:-220% 0;}}
+  .hero-rule{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);margin:30px auto;position:relative;z-index:1;}
+  .hero-date{font-size:15px;letter-spacing:.05em;color:var(--ink-dim);position:relative;z-index:1;}
+  .hero-date b{color:var(--ink);font-weight:500;}
+
+  section{padding:110px 0;}
+  .eyebrow{font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:18px;}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,46px);text-align:center;margin-bottom:20px;}
+  .lead{max-width:560px;margin:0 auto;text-align:center;color:var(--ink-dim);font-size:16px;white-space:pre-line;}
+
+  .persons{background:var(--bg-deep);}
+  .persons-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;margin-top:56px;}
+  .person{width:180px;text-align:center;}
+  .person .ph{width:120px;height:120px;border-radius:50%;margin:0 auto 16px;overflow:hidden;background:linear-gradient(160deg,#2A4A3C,#152922);border:1px solid rgba(201,162,75,.35);}
+  .person .ph img{width:100%;height:100%;object-fit:cover;}
+  .person .role{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .person .name{font-family:var(--serif);font-size:19px;font-weight:500;}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;margin-top:56px;}
+  .card{border:1px solid rgba(201,162,75,.28);padding:40px 30px;text-align:center;position:relative;background:var(--card);}
+  .card::before{content:'';position:absolute;inset:8px;border:1px solid rgba(201,162,75,.15);pointer-events:none;}
+  .card h3{font-family:var(--serif);font-weight:500;font-size:23px;margin-bottom:10px;}
+  .card p{color:var(--ink-dim);font-size:14px;margin-bottom:3px;}
+  .card .time{color:var(--gold-light);font-size:14.5px;margin-top:14px;}
+  .card a.map-link{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--gold);text-decoration:underline;}
+
+  .count-wrap{background:var(--bg-deep);text-align:center;padding:100px 0;}
+  .count{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:44px;}
+  .count .box{min-width:78px;}
+  .count .box b{display:block;font-family:var(--serif);font-size:clamp(28px,6vw,44px);color:var(--gold-light);font-weight:500;}
+  .count .box span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);}
+
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;margin-top:56px;}
+  .gallery img{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid rgba(201,162,75,.12);}
+
+  .rsvp-wrap{background:var(--bg-deep);text-align:center;}
+  .rsvp-btn{
+    display:inline-block;margin-top:36px;padding:18px 48px;background:linear-gradient(100deg,var(--gold),var(--gold-light),var(--gold));
+    background-size:220% auto;color:#12211C;font-family:var(--sans);font-weight:500;letter-spacing:.08em;
+    text-transform:uppercase;font-size:13px;text-decoration:none;transition:background-position .5s;
+  }
+  .rsvp-btn:hover{background-position:-100% 0;}
+
+  footer{text-align:center;padding:60px 24px;color:var(--ink-dim);font-size:13px;}
+  footer .fmono{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:20px;display:block;margin-bottom:10px;}
+
+  @media (max-width:760px){
+    section{padding:76px 0;}
+    .cards{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <p class="kicker">Pozivamo vas na venčanje</p>
+  <div class="cover-frame"><img src="{{cover_image}}" alt=""></div>
+  <h1 class="names">{{title}}</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-date">{{date_label}} <b>{{date}}</b>{{time_suffix}}</p>
+</section>
+
+<section class="lead-section">
+  <div class="wrap">
+    <p class="eyebrow">Poruka</p>
+    <h2>Poziv za vas</h2>
+    <p class="lead">{{message}}</p>
+  </div>
+</section>
+
+<section class="persons" style="display:{{persons_section_display}};">
+  <div class="wrap">
+    <p class="eyebrow">Ko slavi</p>
+    <h2>Mladenci i najbliži</h2>
+    <div class="persons-grid">{{persons_html}}</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Kada i gde</p>
+    <h2>Raspored dana</h2>
+    <div class="cards">{{locations_html}}</div>
+  </div>
+</section>
+
+<section class="count-wrap" style="display:{{countdown_display}};">
+  <div class="wrap">
+    <p class="eyebrow">Preostalo vreme</p>
+    <h2>Brojimo dane</h2>
+    <div class="count">
+      <div class="box"><b id="cd-d">00</b><span>Dana</span></div>
+      <div class="box"><b id="cd-h">00</b><span>Sati</span></div>
+      <div class="box"><b id="cd-m">00</b><span>Minuta</span></div>
+      <div class="box"><b id="cd-s">00</b><span>Sekundi</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:{{gallery_section_display}};">
+  <div class="wrap">
+    <p class="eyebrow">Trenuci</p>
+    <h2>Galerija</h2>
+    <div class="gallery">{{gallery_html}}</div>
+  </div>
+</section>
+
+<section class="rsvp-wrap">
+  <div class="wrap">
+    <p class="eyebrow">Potvrda dolaska</p>
+    <h2>Hoćete li nam se pridružiti?</h2>
+    <p class="lead">Molimo vas da potvrdite dolazak — vaš odgovor nam pomaže da sve isplaniramo do detalja.</p>
+    <a class="rsvp-btn" href="{{rsvp_url}}">Potvrdi dolazak</a>
+  </div>
+</section>
+
+<footer>
+  <span class="fmono">{{title}}</span>
+  Sa ljubavlju vas očekujemo — {{date}}
+</footer>
+
+<script>
+  var t = "{{countdown_target}}";
+  if(t){
+    var target = new Date(t);
+    function tick(){
+      var diff = Math.max(0, target - new Date());
+      var d = Math.floor(diff/864e5), h = Math.floor(diff/36e5)%24,
+          m = Math.floor(diff/6e4)%60, s = Math.floor(diff/1e3)%60;
+      var pad = function(n){ return String(n).padStart(2,'0'); };
+      var elD=document.getElementById('cd-d'), elH=document.getElementById('cd-h'),
+          elM=document.getElementById('cd-m'), elS=document.getElementById('cd-s');
+      if(elD){ elD.textContent=pad(d); elH.textContent=pad(h); elM.textContent=pad(m); elS.textContent=pad(s); }
+    }
+    tick(); setInterval(tick, 1000);
+  }
+</script>
+</body>
+</html>
