@@ -1,0 +1,41 @@
+# Atelje Pozivnica
+# Pocetna strana je otvorena za indeksiranje.
+# Pojedinacne pozivnice (/idpozivnice/) i panel domacina (/idpozivnice/token/)
+# NIKAD se ne indeksiraju jer sadrze licne podatke gostiju — to je zasticeno
+# serverski (meta robots "noindex") u worker.js, ne samo ovde.
+
+# VAZNO: botovi drustvenih mreza koji prave PREGLED LINKA (slika/naslov/opis kad
+# se link podeli na Viber/WhatsApp/Facebook/Instagram) TAKODJE poštuju robots.txt,
+# isto kao Google. Bez ovog izuzetka, opšte pravilo ispod ("Disallow: /*/") bi
+# blokiralo i njih, pa se pregled linka nikad ne bi prikazao — tacno to se
+# ranije desavalo. Ovi botovi samo GENERISU PREGLED, ne indeksiraju stranicu
+# na internetu (to sprecava "noindex" meta tag u worker.js), pa je bezbedno
+# dozvoliti im pristup.
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: ViberBot
+Allow: /
+
+User-agent: *
+Allow: /$
+Disallow: /*/
+
+# VAZNO: kada povezete sopstveni domen (Deo 1, Korak 7 u UPUTSTVU),
+# zamenite adresu ispod svojim stvarnim domenom.
+Sitemap: https://mojeveselje.workers.dev/sitemap.xml
